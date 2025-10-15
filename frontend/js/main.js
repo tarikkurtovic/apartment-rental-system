@@ -172,33 +172,31 @@ $('.popup-video').magnificPopup({
 });
 
 
-  // scrollIt for smoth scroll
   $.scrollIt({
-    upKey: 38,             // key code to navigate to the next section
-    downKey: 40,           // key code to navigate to the previous section
-    easing: 'linear',      // the easing function for animation
-    scrollTime: 600,       // how long (in ms) the animation takes
-    activeClass: 'active', // class given to the active nav element
-    onPageChange: null,    // function(pageIndex) that is called when page is changed
-    topOffset: 0           // offste (in px) for fixed top navigation
+    upKey: 38,            
+    downKey: 40,        
+    easing: 'linear',   
+    scrollTime: 600,       
+    activeClass: 'active',
+    onPageChange: null,   
+    topOffset: 0           
   });
 
-  // scrollup bottom to top
+
   $.scrollUp({
-    scrollName: 'scrollUp', // Element ID
-    topDistance: '4500', // Distance from top before showing element (px)
-    topSpeed: 300, // Speed back to top (ms)
-    animation: 'fade', // Fade, slide, none
-    animationInSpeed: 200, // Animation in speed (ms)
-    animationOutSpeed: 200, // Animation out speed (ms)
-    scrollText: '<i class="fa fa-angle-double-up"></i>', // Text for element
-    activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+    scrollName: 'scrollUp', 
+    topDistance: '4500',
+    topSpeed: 300, 
+    animation: 'fade',
+    animationInSpeed: 200,
+    animationOutSpeed: 200, 
+    scrollText: '<i class="fa fa-angle-double-up"></i>',
+    activeOverlay: false, 
   });
 
 
-  // blog-page
 
-  //brand-active
+
 $('.brand-active').owlCarousel({
   loop:true,
   margin:30,
@@ -303,8 +301,7 @@ $(document).ready(function() {
 		preloader: false,
 		focus: '#name',
 
-		// When elemened is focused, some mobile browsers in some cases zoom in
-		// It looks not nice, so we disable it:
+	
 		callbacks: {
 			beforeOpen: function() {
 				if($(window).width() < 700) {
