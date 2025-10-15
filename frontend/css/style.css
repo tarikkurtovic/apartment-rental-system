@@ -48,3 +48,12 @@ body { padding-top: 90px; }
 .breadcam_bg_2 {
   display: none !important;
 }
+
+
+.location-directory .ld-item {
+  border: 1px solid #eee; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px;
+  background: #fff;
+}
+.location-directory .ld-head h5 { margin: 0; }
+.location-directory .ld-body { display: grid; gap: 6px; margin-top: 8px; font-size: 14px; }
+.location-directory i { width: 16px; text-align: center; margin-right: 6px; }

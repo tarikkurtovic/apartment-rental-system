@@ -24,10 +24,6 @@ if(menu.length){
 		openedSymbol:'-'
 	});
 };
-// blog-menu
-  // $('ul#blog-menu').slicknav({
-  //   prependTo: ".blog_menu"
-  // });
 
 // review-active
 $('.slider_active').owlCarousel({
