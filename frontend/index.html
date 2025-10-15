@@ -38,6 +38,8 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#blog">Blog</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#login">Login</a></li>
+                    <li><a href="#register">Register</a></li>
                   </ul>
                 </nav>
               </div>
@@ -74,6 +76,9 @@
         <section id="about"   data-load="about.html"></section>
         <section id="blog"    data-load="single-blog.html"></section>
         <section id="contact" data-load="contact.html"></section>
+        <section id="login" data-load="login.html"></section>
+        <section id="register" data-load="register.html"></section>
+
     </main>
 
   </section>
@@ -103,6 +108,8 @@
                 <li><a href="#rooms">Rooms</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#blog">News</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#register">Register</a></li>
               </ul>
             </div>
           </div>
@@ -143,18 +150,20 @@
         <h3>Check Availability</h3>
         <div class="row">
           <div class="col-xl-6"><input id="datepicker" placeholder="Check in date"></div>
-          <div class="col-xl-6"><input id="datepicker2" placeholder="Check out date"></div>
-          <div class="col-xl-6">
+          <div class="col-xl-6" style="margin-bottom: 10px;"><input id="datepicker2" placeholder="Check out date"></div>
+          <div class="col-xl-6" style="margin-bottom: 40px;">
             <select class="form-select wide" id="default-select">
               <option data-display="Adult">1</option><option>2</option><option>3</option><option>4</option>
             </select>
           </div>
+          <br>
           <div class="col-xl-6">
             <select class="form-select wide" id="default-select-2">
               <option data-display="Children">1</option><option>2</option><option>3</option><option>4</option>
             </select>
           </div>
-          <div class="col-xl-12">
+          <br>
+          <div class="col-xl-12" style="margin-bottom: 30px;">
             <select class="form-select wide" id="default-select-3">
               <option data-display="Room type">Room type</option>
               <option>Laxaries Rooms</option><option>Deluxe Room</option>

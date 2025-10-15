@@ -1,0 +1,85 @@
+<section class="contact-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center mb-4">
+        <h2 class="contact-title">Register</h2>
+      </div>
+
+      <div class="col-12 col-md-8 col-lg-6">
+        <form class="form-contact contact_form mx-auto" action="#" method="post" id="contactForm">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="form-group">
+                <input class="form-control" name="name" id="name" type="text" placeholder="Enter your name" required>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <input class="form-control" name="email" id="email" type="email" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <input class="form-control"
+                       name="password"
+                       id="password"
+                       type="password"
+                       placeholder="Enter password"
+                       minlength="6"
+                       autocomplete="new-password"
+                       required>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="form-group">
+                <input class="form-control"
+                       name="confirmPassword"
+                       id="confirmPassword"
+                       type="password"
+                       placeholder="Confirm password"
+                       minlength="6"
+                       autocomplete="new-password"
+                       required>
+              </div>
+            </div>
+
+            <div class="col-12 text-center">
+              <button type="submit" class="button button-contactForm boxed-btn">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const form = document.getElementById('contactForm');
+    const pwd = document.getElementById('password');
+    const confirm = document.getElementById('confirmPassword');
+
+    function validatePasswordsMatch() {
+      if (pwd.value && confirm.value && pwd.value !== confirm.value) {
+        confirm.setCustomValidity('Passwords do not match');
+      } else {
+        confirm.setCustomValidity('');
+      }
+    }
+
+    pwd.addEventListener('input', validatePasswordsMatch);
+    confirm.addEventListener('input', validatePasswordsMatch);
+
+    form.addEventListener('submit', function (e) {
+      validatePasswordsMatch();
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+      }
+    });
+  })();
+</script>
