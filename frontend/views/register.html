@@ -46,9 +46,9 @@
               </div>
             </div>
 
-          <div class="col-12 text-center">
-          <button type="button" class="button button-contactForm boxed-btn" onclick="window.location.hash='home'">Register</button>
-          </div>
+            <div class="col-12 text-center">
+              <button type="submit" class="button button-contactForm boxed-btn">Register</button>
+            </div>
           </div>
         </form>
       </div>
@@ -57,29 +57,3 @@
   </div>
 </section>
 
-<script>
-  (function () {
-    const form = document.getElementById('contactForm');
-    const pwd = document.getElementById('password');
-    const confirm = document.getElementById('confirmPassword');
-
-    function validatePasswordsMatch() {
-      if (pwd.value && confirm.value && pwd.value !== confirm.value) {
-        confirm.setCustomValidity('Passwords do not match');
-      } else {
-        confirm.setCustomValidity('');
-      }
-    }
-
-    pwd.addEventListener('input', validatePasswordsMatch);
-    confirm.addEventListener('input', validatePasswordsMatch);
-
-    form.addEventListener('submit', function (e) {
-      validatePasswordsMatch();
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        form.reportValidity();
-      }
-    });
-  })();
-</script>
