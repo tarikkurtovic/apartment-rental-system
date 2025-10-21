@@ -1,0 +1,201 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Montana</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/owl.carousel.min.css">
+  <link rel="stylesheet" href="./css/magnific-popup.css">
+  <link rel="stylesheet" href="./css/nice-select.css">
+  <link rel="stylesheet" href="./css/gijgo.css">
+  <link rel="stylesheet" href="./css/slicknav.css">
+  <!-- SPApp CSS -->
+  <link rel="stylesheet" href="./css/spapp.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="header-area">
+      <div id="sticky-header" class="main-header-area">
+        <div class="container-fluid p-0">
+          <div class="row align-items-center no-gutters">
+            <div class="col-xl-5 col-lg-6">
+              <div class="main-menu d-none d-lg-block">
+                <nav>
+                  <ul id="navigation">
+                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#booking">Booking</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#login">Login</a></li>
+                    <li><a href="#register">Register</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <div class="col-xl-2 col-lg-2">
+              <div class="logo-img">
+                <a href="#home">
+                  <img src="assets/img/logo.png" alt="">
+                </a>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-4 d-none d-lg-block">
+              <div class="book_room">
+                <div class="book_btn d-none d-lg-block">
+                  <a class="popup-with-form" href="#test-form">Book A Room</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- SPA container -->
+  <section id="pageContent">
+    <main id="spapp" role="main">
+         <section id="home"    data-load="home.html"></section>
+        <section id="rooms"   data-load="rooms.html"></section>
+        <section id="about"   data-load="about.html"></section>
+        <section id="booking"    data-load="booking.html"></section>
+        <section id="contact" data-load="contact.html"></section>
+        <section id="login" data-load="login.html"></section>
+        <section id="register" data-load="register.html"></section>
+
+    </main>
+
+  </section>
+
+  <footer class="footer">
+    <div class="footer_top">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3 col-md-6 col-lg-3">
+            <div class="footer_widget">
+              <h3 class="footer_title">address</h3>
+              <p class="footer_text">Sarajevo, Kranjčevića 16<br>Bosnia & Herzegovina</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 col-lg-3">
+            <div class="footer_widget">
+              <h3 class="footer_title">Reservation</h3>
+              <p class="footer_text">+387 62 345 726<br>reservation@montana.com</p>
+            </div>
+          </div>
+          <div class="col-xl-2 col-md-6 col-lg-2">
+            <div class="footer_widget">
+              <h3 class="footer_title">Navigation</h3>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#booking">Booking</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#register">Register</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4 col-md-6 col-lg-4">
+           <div class="footer_widget">
+            <h3 class="footer_title">Information</h3>
+            <p class="footer_text">Reception: Mon–Fri 09:00–18:00</p>
+            <p class="footer_text">Check-in: from 14:00</p>
+            <p class="footer_text">Check-out: by 11:00</p>
+            <p class="footer_text">Late arrival: by prior notice</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="copy-right_text">
+      <div class="container">
+        <div class="footer_border"></div>
+        <div class="row">
+          
+          <div class="col-xl-4 col-md-5 col-lg-3"></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Popup forma -->
+  <form id="test-form" class="white-popup-block mfp-hide">
+    <div class="popup_box">
+      <div class="popup_inner">
+        <h3>Check Availability</h3>
+        <div class="row">
+          <div class="col-xl-6"><input id="datepicker" placeholder="Check in date"></div>
+          <div class="col-xl-6" style="margin-bottom: 10px;"><input id="datepicker2" placeholder="Check out date"></div>
+          <div class="col-xl-6" style="margin-bottom: 40px;">
+            <select class="form-select wide" id="default-select">
+              <option data-display="Adult">1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+          <br>
+          <div class="col-xl-6">
+            <select class="form-select wide" id="default-select-2">
+              <option data-display="Children">1</option><option>2</option><option>3</option><option>4</option>
+            </select>
+          </div>
+          <br>
+          <div class="col-xl-12" style="margin-bottom: 30px;">
+            <select class="form-select wide" id="default-select-3">
+              <option data-display="Room type">Room type</option>
+              <option>Laxaries Rooms</option><option>Deluxe Room</option>
+              <option>Signature Room</option><option>Couple Room</option>
+            </select>
+          </div>
+          <div class="col-xl-12">
+            <button type="submit" class="boxed-btn3">Check Availability</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+ 
+  <script src="./js/vendor/modernizr-3.5.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./js/jquery.spapp.min.js"></script>
+  <script src="./js/script.js"></script>
+
+  <script src="./js/popper.min.js"></script>
+  <script src="./js/owl.carousel.min.js"></script>
+  <script src="./js/isotope.pkgd.min.js"></script>
+  <script src="./js/jquery.counterup.min.js"></script>
+  <script src="./js/wow.min.js"></script>
+  <script src="./js/nice-select.min.js"></script>
+  <script src="./js/jquery.slicknav.min.js"></script>
+  <script src="./js/jquery.magnific-popup.min.js"></script>
+  <script src="./js/gijgo.min.js"></script>
+  <script src="./js/main.js"></script>
+  <script src="./js/register.js"></script>
+
+  <script>
+    $('#datepicker').datepicker({
+      iconsLibrary: 'fontawesome',
+      icons: { rightIcon: '<span class="fa fa-caret-down"></span>' }
+    });
+    $('#datepicker2').datepicker({
+      iconsLibrary: 'fontawesome',
+      icons: { rightIcon: '<span class="fa fa-caret-down"></span>' }
+    });
+  </script>
+</body>
+</html>
