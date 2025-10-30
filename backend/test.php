@@ -15,62 +15,104 @@ $room = new RoomDAO();
 $res  = new ReservationDAO();
 $pay  = new PaymentDAO();
 
-
-$email      = 'hafe@gmail.com';
+$email      = 'trba@gmail.com';
 $rtName     = 'Deluxe Suite';
 $roomNumber = '101';
 $checkIn    = date('Y-m-d', strtotime('+1 day'));
 $checkOut   = date('Y-m-d', strtotime('+3 days'));
 $amount     = 240.00;
 
-$u = $user->getByEmail($email);
+$stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+$stmt->execute([':email' => $email]);
+$u = $stmt->fetch();
+
 if ($u) {
   $userId = (int)$u['id'];
 } else {
-  $user->insert(['name'=>'Hafe',
-                 'email'=>$email,
-                 'password'=>'hafe123',
-                 'role'=>'user',
-                 'phone'=>null]);
+  $user->insert([
+    'name'     => 'shaba',
+    'email'    => $email,
+    'password' => 'aaaaaaaaaaaaaaaaaaa',
+    'role'     => 'user',
+    'phone'    => null
+  ]);
   $userId = (int)$db->lastInsertId();
 }
 
 $rtId = null;
-foreach ($rt->getAll() as $row) { if ($row['name'] === $rtName) { $rtId = (int)$row['id']; break; } }
-if (!$rtId) { $rt->insert(['name'=>$rtName,'description'=>'Spacious suite with sea view']); $rtId = (int)$db->lastInsertId(); }
-
+foreach ($rt->getAll() as $row) {
+  if ($row['name'] === $rtName) { $rtId = (int)$row['id']; break; }
+}
+if (!$rtId) {
+  $rt->insert(['name' => $rtName, 'description' => 'Spacious suite with sea view']);
+  $rtId = (int)$db->lastInsertId();
+}
 
 $roomId = null;
-foreach ($room->getAll() as $r) { if ($r['number'] === $roomNumber) { $roomId = (int)$r['id']; break; } }
+foreach ($room->getAll() as $r) {
+  if ($r['number'] === $roomNumber) { $roomId = (int)$r['id']; break; }
+}
 if (!$roomId) {
-  $room->insert(['number'=>$roomNumber,'title'=>'Deluxe 101','description'=>'Large double room with balcony','max_guests'=>2,'price_per_night'=>120.00,'room_type_id'=>$rtId]);
+  $room->insert([
+    'number'          => $roomNumber,
+    'title'           => 'Deluxe 101',
+    'description'     => 'Large double room with balcony',
+    'max_guests'      => 2,
+    'price_per_night' => 120,
+    'room_type_id'    => $rtId
+  ]);
   $roomId = (int)$db->lastInsertId();
 }
 
-
 $existingRes = null;
 foreach ($res->getAll() as $rr) {
-  if ((int)$rr['user_id']===$userId && (int)$rr['room_id']===$roomId && $rr['check_in']===$checkIn && $rr['check_out']===$checkOut) { $existingRes=$rr; break; }
+  if ((int)$rr['user_id'] === $userId &&
+      (int)$rr['room_id'] === $roomId &&
+      $rr['check_in'] === $checkIn &&
+      $rr['check_out'] === $checkOut) {
+    $existingRes = $rr; break;
+  }
 }
 if ($existingRes) {
   $reservationId = (int)$existingRes['id'];
 } else {
-  $res->insert(['user_id'=>$userId,'room_id'=>$roomId,'check_in'=>$checkIn,'check_out'=>$checkOut,'guests'=>2]);
+  $res->insert([
+    'user_id'   => $userId,
+    'room_id'   => $roomId,
+    'check_in'  => $checkIn,
+    'check_out' => $checkOut,
+    'guests'    => 2
+  ]);
   $reservationId = (int)$db->lastInsertId();
 }
 
-
 $hasPayment = false;
 foreach ($pay->getAll() as $pp) {
-  if ((int)$pp['reservation_id']===$reservationId && (float)$pp['amount']==$amount) { $hasPayment = true; break; }
+  if ((int)$pp['reservation_id'] === $reservationId && (float)$pp['amount'] == $amount) {
+    $hasPayment = true; break;
+  }
 }
 if (!$hasPayment) {
-  $pay->insert(['reservation_id'=>$reservationId,'amount'=>$amount,'currency'=>'EUR','paid_at'=>date('Y-m-d H:i:s')]);
+  $pay->insert([
+    'reservation_id' => $reservationId,
+    'amount'         => $amount,
+    'currency'       => 'EUR',
+    'paid_at'        => date('Y-m-d H:i:s')
+  ]);
 }
 
-
+echo "\n=== USERS ===\n";
 print_r($user->getAll());
+
+echo "\n=== ROOM TYPES ===\n";
 print_r($rt->getAll());
+
+echo "\n=== ROOMS ===\n";
 print_r($room->getAll());
+
+echo "\n=== RESERVATIONS ===\n";
 print_r($res->getAll());
+
+echo "\n=== PAYMENTS ===\n";
 print_r($pay->getAll());
+?>
