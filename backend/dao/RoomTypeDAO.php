@@ -33,5 +33,11 @@ class RoomTypeDAO extends BaseDAO {
     public function deleteRoomType($id){
         return $this->delete($id);
     }
+
+    public function getByName($name) {
+    $stmt = $this->connection->prepare("SELECT * FROM room_types WHERE name = :name");
+    $stmt->execute(['name' => $name]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
 ?>
