@@ -10,8 +10,7 @@ class PaymentService extends BaseService{
     }
 
     public function createPayment($data){
-
-
+        
         $reservation_dao = new ReservationDAO();
         $reservation = $reservation_dao->getReservationById($data['reservation_id']); 
 
