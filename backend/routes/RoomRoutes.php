@@ -5,6 +5,7 @@
  *     path="/rooms",
  *     tags={"rooms"},
  *     summary="Get all rooms",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="Returns all rooms"
@@ -12,6 +13,15 @@
  * )
  */
 Flight::route('GET /rooms', function() {
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     Flight::json(Flight::roomService()->getAll());
 });
 
@@ -20,6 +30,7 @@ Flight::route('GET /rooms', function() {
  *     path="/rooms/{id}",
  *     tags={"rooms"},
  *     summary="Get a room by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -34,6 +45,16 @@ Flight::route('GET /rooms', function() {
  * )
  */
 Flight::route('GET /rooms/@id', function($id) {
+
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     Flight::json(Flight::roomService()->getById($id));
 });
 
@@ -42,6 +63,7 @@ Flight::route('GET /rooms/@id', function($id) {
  *     path="/rooms/number/{number}",
  *     tags={"rooms"},
  *     summary="Get a room by its number (e.g., 101, 202)",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="number",
  *         in="path",
@@ -56,6 +78,16 @@ Flight::route('GET /rooms/@id', function($id) {
  * )
  */
 Flight::route('GET /rooms/number/@number', function($number) {
+
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     Flight::json(Flight::roomService()->getByNumber($number));
 });
 
@@ -64,6 +96,7 @@ Flight::route('GET /rooms/number/@number', function($number) {
  *     path="/rooms",
  *     tags={"rooms"},
  *     summary="Create a new room",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -87,6 +120,13 @@ Flight::route('GET /rooms/number/@number', function($number) {
  * )
  */
 Flight::route('POST /rooms', function() {
+
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
     $data = Flight::request()->data->getData();
     try {
         $result = Flight::roomService()->createRoom($data);
@@ -101,6 +141,7 @@ Flight::route('POST /rooms', function() {
  *     path="/rooms/{id}",
  *     tags={"rooms"},
  *     summary="Update a room by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -126,6 +167,12 @@ Flight::route('POST /rooms', function() {
  * )
  */
 Flight::route('PUT /rooms/@id', function($id) {
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+
     $data = Flight::request()->data->getData();
     try {
         $result = Flight::roomService()->update($id, $data);
@@ -140,6 +187,7 @@ Flight::route('PUT /rooms/@id', function($id) {
  *     path="/rooms/{id}",
  *     tags={"rooms"},
  *     summary="Delete a room by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -154,6 +202,13 @@ Flight::route('PUT /rooms/@id', function($id) {
  * )
  */
 Flight::route('DELETE /rooms/@id', function($id) {
+
+     Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    
     try {
         $result = Flight::roomService()->delete($id);
         Flight::json(['message' => 'Room deleted successfully', 'result' => $result]);
