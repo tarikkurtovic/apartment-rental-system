@@ -4,6 +4,7 @@
  *     path="/reservations",
  *     tags={"reservations"},
  *     summary="Get all reservations",
+ *     security={{"ApiKey": {}}},
  *     @OA\Response(
  *         response=200,
  *         description="Returns all reservations"
@@ -11,6 +12,14 @@
  * )
  */
 Flight::route('GET /reservations', function() {
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
     Flight::json(Flight::reservationService()->getAll());
 });
 
@@ -19,6 +28,7 @@ Flight::route('GET /reservations', function() {
  *     path="/reservations/{id}",
  *     tags={"reservations"},
  *     summary="Get a reservation by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -33,6 +43,15 @@ Flight::route('GET /reservations', function() {
  * )
  */
 Flight::route('GET /reservations/@id', function($id) {
+     Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     Flight::json(Flight::reservationService()->getById($id));
 });
 
@@ -41,6 +60,7 @@ Flight::route('GET /reservations/@id', function($id) {
  *     path="/reservations/user/{user_id}",
  *     tags={"reservations"},
  *     summary="Get all reservations for a user",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="user_id",
  *         in="path",
@@ -56,6 +76,15 @@ Flight::route('GET /reservations/@id', function($id) {
  */
 
 Flight::route('GET /reservations/user/@user_id', function($user_id) {
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     Flight::json(Flight::reservationService()->getByUser($user_id));
 });
 
@@ -64,6 +93,7 @@ Flight::route('GET /reservations/user/@user_id', function($user_id) {
  *     path="/reservations",
  *     tags={"reservations"},
  *     summary="Create a new reservation",
+ *     security={{"ApiKey": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(
@@ -86,7 +116,17 @@ Flight::route('GET /reservations/user/@user_id', function($user_id) {
  * )
  */
 Flight::route('POST /reservations', function() {
+    Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRoles([
+        Roles::ADMIN,
+        Roles::USER
+    ]);
+
     $data = Flight::request()->data->getData();
+
     try {
         $result = Flight::reservationService()->createReservation($data);
         Flight::json(['message' => 'Reservation created successfully', 'result' => $result]);
@@ -100,6 +140,7 @@ Flight::route('POST /reservations', function() {
  *     path="/reservations/{id}",
  *     tags={"reservations"},
  *     summary="Update a reservation by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -124,7 +165,14 @@ Flight::route('POST /reservations', function() {
  * )
  */
 Flight::route('PUT /reservations/@id', function($id) {
+     Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    
     $data = Flight::request()->data->getData();
+
     try {
         $result = Flight::reservationService()->update($id, $data);
         Flight::json(['message' => 'Reservation updated successfully', 'result' => $result]);
@@ -138,6 +186,7 @@ Flight::route('PUT /reservations/@id', function($id) {
  *     path="/reservations/{id}",
  *     tags={"reservations"},
  *     summary="Delete a reservation by ID",
+ *     security={{"ApiKey": {}}},
  *     @OA\Parameter(
  *         name="id",
  *         in="path",
@@ -152,6 +201,12 @@ Flight::route('PUT /reservations/@id', function($id) {
  * )
  */
 Flight::route('DELETE /reservations/@id', function($id) {
+     Flight::auth_middleware()->verifyToken(
+        Flight::request()->getHeader("Authentication")
+    );
+
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN);
+    
     try {
         $result = Flight::reservationService()->delete($id);
         Flight::json(['message' => 'Reservation deleted successfully', 'result' => $result]);
