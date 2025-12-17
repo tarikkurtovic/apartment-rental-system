@@ -11,15 +11,10 @@ Flight::group('/auth', function() {
      *     summary="Register new user.",
      *     description="Add a new user to the database.",
      *     tags={"auth"},
-     *     security={
-     *         {"ApiKey": {}}
-     *     },
      *     @OA\RequestBody(
      *         description="Add new user",
      *         required=true,
-     *         @OA\MediaType(
-     *             mediaType="application/json",
-     *             @OA\Schema(
+     *             @OA\JsonContent(
      *                 required={"password", "email"},
      *                 @OA\Property(
      *                     property="password",

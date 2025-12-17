@@ -36,6 +36,16 @@ class BaseDAO {
        return $stmt->execute($data);
    }
 
+   protected function query($query, $params = []) {
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
+    }
+
+    protected function query_unique($query, $params = []) {
+        $stmt = $this->query($query, $params);
+        return $stmt->fetch();
+    }
 
    public function update($id, $data) {
        $fields = "";
