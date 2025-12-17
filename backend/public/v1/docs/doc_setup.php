@@ -26,4 +26,3 @@
 *     name="Authentication"
 * )
 */
-?>
