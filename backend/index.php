@@ -8,6 +8,17 @@ require_once __DIR__ . '/database.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+// CORS HEADERS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authentication");
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 require_once __DIR__ . '/services/PaymentService.php';
 require_once __DIR__ . '/services/ReservationService.php';
 require_once __DIR__ . '/services/RoomService.php';

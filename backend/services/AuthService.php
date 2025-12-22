@@ -38,13 +38,13 @@ class AuthService extends BaseService {
            $entity['role'] = 'user';
        }
 
-  
-       $entity = parent::insert($entity);
+       parent::create($entity);
+        
+       $user = $this->auth_dao->get_user_by_email($entity['email']);
 
+       unset($user['password']);
 
-       unset($entity['password']);
-
-       return ['success' => true, 'data' => $entity];
+       return ['success' => true, 'data' => $user];
    }
 
    public function login($entity) {

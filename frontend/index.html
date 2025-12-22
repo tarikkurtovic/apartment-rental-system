@@ -39,6 +39,7 @@
                     <li><a href="#contact">Contact</a></li>
                     <li><a href="#login">Login</a></li>
                     <li><a href="#register">Register</a></li>
+                    <li><a href="#admin-panel" id="admin-link" style="display:none;">Admin</a></li>
                   </ul>
                 </nav>
               </div>
@@ -77,6 +78,8 @@
         <section id="contact" data-load="contact.html"></section>
         <section id="login" data-load="login.html"></section>
         <section id="register" data-load="register.html"></section>
+
+        <section id="admin-panel" data-load="admin-panel.html"></section>
 
     </main>
 
@@ -172,6 +175,13 @@
  
   <script src="./js/vendor/modernizr-3.5.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script src="./js/utils/constants.js"></script>
+  <script src="./js/utils/rest-client.js"></script>
+  <script src="./js/utils/utils.js"></script>
+
+  <script src="./js/services/auth-service.js"></script>
+
   <script src="./js/jquery.spapp.min.js"></script>
   <script src="./js/script.js"></script>
 
@@ -184,8 +194,7 @@
   <script src="./js/jquery.slicknav.min.js"></script>
   <script src="./js/jquery.magnific-popup.min.js"></script>
   <script src="./js/gijgo.min.js"></script>
-  <script src="./js/main.js"></script>
-  <script src="./js/register.js"></script>
+
 
   <script>
     $('#datepicker').datepicker({
