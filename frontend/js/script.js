@@ -80,3 +80,21 @@ $(window).on('load hashchange', function () {
     $('#admin-link').hide();
   }
 });
+
+
+
+$(document).on("click", "#btn-create", function () {
+  alert("CREATE action (admin only)");
+});
+
+$(document).on("click", "#btn-read", function () {
+  alert("READ action (admin only)");
+});
+
+$(document).on("click", "#btn-update", function () {
+  alert("UPDATE action (admin only)");
+});
+
+$(document).on("click", "#btn-delete", function () {
+  alert("DELETE action (admin only)");
+});
