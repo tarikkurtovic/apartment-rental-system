@@ -7,9 +7,6 @@ $(function () {
   });
   app.run();
 
-
-
-  
   function setActive() {
     var view = location.hash || '#home';
     $('#navigation a').removeClass('active');
@@ -19,54 +16,57 @@ $(function () {
   $(window).on('hashchange', setActive);
 });
 
-$(document).on("click", "#login-btn", function () {
-  const email = $("#login-email").val();
-  const password = $("#login-password").val();
+// ==================== PAYMENTS ====================
+function loadPayments() {
+  PaymentService.loadPayments(
+    function (data) {
+      let html = "";
+      data.forEach(p => {
+        html += `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.reservation_id}</td>
+            <td>${p.amount}</td>
+            <td>${p.currency}</td>
+            <td>${p.paid_at}</td>
+            <td class="admin-actions">
+              <button class="btn btn-danger btn-sm"
+                onclick="deletePayment(${p.id})">
+                Delete
+              </button>
+            </td>
+          </tr>
+        `;
+      });
 
-  if (!email || !password) {
-    alert("Please enter email and password");
+      $("#payments-body").html(html);
+
+      if (!Utils.isAdmin()) {
+        $(".admin-actions").hide();
+      }
+    },
+    function () {
+      window.location.hash = "#login";
+    }
+  );
+}
+
+function deletePayment(id) {
+  if (!confirm("Are you sure you want to delete this payment?")) {
     return;
   }
+  PaymentService.deletePayment(id, function () {
+    loadPayments();
+  });
+}
 
-  AuthService.login(email, password);
-});
-
-
-
-
-
-$(document).on("click", "#register-btn", function () {
-
-  const email = $("#register-email").val();
-  const password = $("#register-password").val();
-  const repeat = $("#register-password-repeat").val();
-
-  if (!email || !password || !repeat) {
-    alert("All fields are required");
-    return;
-  }
-
-  if (password !== repeat) {
-    alert("Passwords do not match");
-    return;
-  }
-
-  AuthService.register(email, password);
-});
-
-
-
-
-
+// ==================== ADMIN PANEL ====================
 $(window).on('load hashchange', function () {
-
   if (location.hash === '#admin-panel') {
-
     if (!Utils.isLoggedIn()) {
       location.hash = '#login';
       return;
     }
-
     if (!Utils.isAdmin()) {
       alert('Access denied');
       location.hash = '#home';
@@ -81,14 +81,12 @@ $(window).on('load hashchange', function () {
   }
 });
 
-
-
 $(document).on("click", "#btn-create", function () {
   alert("CREATE action (admin only)");
 });
 
 $(document).on("click", "#btn-read", function () {
-  alert("READ action (admin only)");
+  loadPayments();
 });
 
 $(document).on("click", "#btn-update", function () {
@@ -97,4 +95,20 @@ $(document).on("click", "#btn-update", function () {
 
 $(document).on("click", "#btn-delete", function () {
   alert("DELETE action (admin only)");
+});
+
+// ==================== INIT SERVICES ====================
+$(document).ready(function () {
+  BookingService.init();
+});
+
+$(document).on('spapp:page-loaded', function () {
+
+  if (location.hash === '#login' || location.hash === '#register') {
+    AuthService.init();
+  } else if (location.hash === '#contact') {
+    ContactService.init();
+  } else if (location.hash === '#home') {
+    BookingService.init();
+  }
 });
