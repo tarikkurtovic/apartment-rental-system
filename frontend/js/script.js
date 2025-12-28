@@ -74,11 +74,30 @@ $(window).on('load hashchange', function () {
     }
   }
 
-  if (Utils.isAdmin()) {
-    $('#admin-link').show();
+  updateNavigation();
+});
+
+function updateNavigation() {
+  if (Utils.isLoggedIn()) {
+    $('.auth-link').hide();
+    $('.user-link').show();
+    if (Utils.isAdmin()) {
+      $('#admin-link').show();
+    } else {
+      $('#admin-link').hide();
+    }
   } else {
+    $('.auth-link').show();
+    $('.user-link').hide();
     $('#admin-link').hide();
   }
+}
+
+// Logout handler
+$(document).on('click', '#logout-link', function(e) {
+  e.preventDefault();
+  AuthService.logout();
+  updateNavigation();
 });
 
 $(document).on("click", "#btn-create", function () {

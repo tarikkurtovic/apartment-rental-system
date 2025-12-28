@@ -27,11 +27,13 @@
           minlength: "Password must be at least 6 characters"
         }
       },
-      submitHandler: function(form) {
+      submitHandler: function(form, event) {
+        event.preventDefault();
         const email = $("#login-email").val();
         const password = $("#login-password").val();
         
         AuthService.login(email, password);
+        return false;
       }
     });
   },
@@ -68,11 +70,13 @@
           equalTo: "Passwords do not match"
         }
       },
-      submitHandler: function(form) {
+      submitHandler: function(form, event) {
+        event.preventDefault();
         const email = $("#register-email").val();
         const password = $("#register-password").val();
         
         AuthService.register(email, password);
+        return false;
       }
     });
   },
@@ -87,7 +91,15 @@
         $.unblockUI();
         localStorage.setItem(Constants.TOKEN_KEY, response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data));
-        window.location.hash = "#home";
+        
+        // Update admin link visibility
+        if (Utils.isAdmin()) {
+          $('#admin-link').show();
+        }
+        
+        // Clear any query params from URL and navigate to home
+        window.history.replaceState({}, document.title, window.location.pathname + '#home');
+        window.location.hash = '#home';
       },
       function () {
         $.unblockUI();
