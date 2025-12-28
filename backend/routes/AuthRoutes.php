@@ -42,7 +42,7 @@ Flight::group('/auth', function() {
      * )
      */
     Flight::route("POST /register", function () {
-        $data = Flight::request()->data->getData();
+        $data = json_decode(Flight::request()->getBody(), true);
 
         $response = Flight::auth_service()->register($data);
     
@@ -76,7 +76,7 @@ Flight::group('/auth', function() {
      * )
      */
     Flight::route('POST /login', function() {
-        $data = Flight::request()->data->getData();
+        $data = json_decode(Flight::request()->getBody(), true);
 
         $response = Flight::auth_service()->login($data);
 
