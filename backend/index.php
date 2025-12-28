@@ -43,6 +43,7 @@ Flight::route('/*', function () {
     $url = Flight::request()->url;
 
     if (
+        $url === '/' ||
         strpos($url, '/auth/login') === 0 ||
         strpos($url, '/auth/register') === 0 ||
         strpos($url, '/public/v1/docs') === 0
@@ -61,6 +62,15 @@ Flight::route('/*', function () {
     } catch (Exception $e) {
         Flight::halt(401, $e->getMessage());
     }
+});
+
+// Root route - welcome message
+Flight::route('GET /', function() {
+    Flight::json([
+        'name' => 'Apartment Rental System API',
+        'version' => '1.0',
+        'documentation' => '/public/v1/docs/'
+    ]);
 });
 
 require_once __DIR__ . '/routes/AuthRoutes.php';
