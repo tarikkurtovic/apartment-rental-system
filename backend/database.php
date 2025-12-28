@@ -7,10 +7,18 @@ class Database {
 
     public static function connect() {
         if (self::$connection === null) {
+
+            header('Content-Type: text/plain');
+            echo Config::DB_HOST() . PHP_EOL;
+            echo Config::DB_PORT() . PHP_EOL;
+            echo Config::DB_NAME() . PHP_EOL;
+            echo Config::DB_USER() . PHP_EOL;
+            exit;
+
             try {
                 self::$connection = new PDO(
-                    "mysql:host=" . Config::DB_HOST() . 
-                    ";port=" . Config::DB_PORT() . 
+                    "mysql:host=" . Config::DB_HOST() .
+                    ";port=" . Config::DB_PORT() .
                     ";dbname=" . Config::DB_NAME(),
                     Config::DB_USER(),
                     Config::DB_PASSWORD(),
