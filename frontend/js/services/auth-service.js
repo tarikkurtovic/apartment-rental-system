@@ -81,7 +81,7 @@
     $.blockUI({ message: '<h3>Logging in...</h3>' });
 
     RestClient.post(
-      "auth/login",
+      "/auth/login",
       { email: email, password: password },
       function (response) {
         $.unblockUI();
@@ -100,7 +100,7 @@
     $.blockUI({ message: '<h3>Registering...</h3>' });
 
     RestClient.post(
-      "auth/register",
+      "/auth/register",
       { email: email, password: password },
       function () {
         $.unblockUI();
