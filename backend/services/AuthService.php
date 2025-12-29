@@ -23,9 +23,6 @@ class AuthService extends BaseService {
        if (empty($entity['email']) || empty($entity['password'])) {
            return ['success' => false, 'error' => 'Email and password are required.'];
        }
-
-       unset($entity['password_repeat']);
-
     
        $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
        if($email_exists){

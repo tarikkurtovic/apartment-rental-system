@@ -102,8 +102,21 @@ $(document).ready(function () {
   BookingService.init();
 });
 
-$(document).on('spapp:page-loaded', function () {
+// Initialize services on hash change (since spapp doesn't fire custom events)
+$(window).on('hashchange', function() {
+  setTimeout(function() {
+    initServicesForCurrentPage();
+  }, 100); // Small delay to ensure page is loaded
+});
 
+// Also run on initial load
+$(document).ready(function() {
+  setTimeout(function() {
+    initServicesForCurrentPage();
+  }, 300);
+});
+
+function initServicesForCurrentPage() {
   if (location.hash === '#login' || location.hash === '#register') {
     AuthService.init();
   } else if (location.hash === '#contact') {
@@ -111,4 +124,4 @@ $(document).on('spapp:page-loaded', function () {
   } else if (location.hash === '#home') {
     BookingService.init();
   }
-});
+}
