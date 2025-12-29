@@ -19,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+// Set Flight base path for subdirectory installation
+Flight::set('flight.base_url', '/apartment-rental-system/backend');
+
 require_once __DIR__ . '/services/PaymentService.php';
 require_once __DIR__ . '/services/ReservationService.php';
 require_once __DIR__ . '/services/RoomService.php';

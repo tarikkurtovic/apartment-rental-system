@@ -32,6 +32,11 @@ class AuthService extends BaseService {
            return ['success' => false, 'error' => 'Email already registered.'];
        }
 
+       // Set default name if not provided (use part before @ from email)
+       if (empty($entity['name'])) {
+           $entity['name'] = explode('@', $entity['email'])[0];
+       }
+
    
        $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
 
