@@ -13,7 +13,11 @@
 
 /**
 * @OA\Server(
-*     url= "http://localhost/apartment-rental-system/backend",
+*     url="https://whale-app-rcfut.ondigitalocean.app",
+*     description="Production API server"
+* )
+* @OA\Server(
+*     url="http://localhost/apartment-rental-system/backend",
 *     description="Local API server"
 * )
 */
