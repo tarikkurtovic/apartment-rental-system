@@ -96,9 +96,9 @@
           $('#admin-link').show();
         }
         
-       
-        window.history.replaceState({}, document.title, window.location.pathname + '#home');
-        window.location.hash = '#home';
+        // Force page reload to home
+        window.location.href = window.location.pathname + '#home';
+        window.location.reload();
       },
       function () {
         $.unblockUI();
