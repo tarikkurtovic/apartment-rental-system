@@ -42,6 +42,8 @@ Flight::group('/auth', function() {
      * )
      */
     Flight::route("POST /register", function () {
+
+        Flight::json(["debug" => "ROUTE HIT"]);
         $data = json_decode(Flight::request()->getBody(), true);
 
         $response = Flight::auth_service()->register($data);
