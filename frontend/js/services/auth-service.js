@@ -96,7 +96,7 @@
           $('#admin-link').show();
         }
         
-        // Force page reload to home
+       
         window.location.href = window.location.pathname + '#home';
         window.location.reload();
       },
