@@ -1,7 +1,6 @@
 RewriteEngine On
 
-# RewriteBase is / for production (DigitalOcean)
-# For local XAMPP in subdirectory, the base path is handled by Flight framework
+
 RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f

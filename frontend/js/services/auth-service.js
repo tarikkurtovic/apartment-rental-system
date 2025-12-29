@@ -107,28 +107,22 @@
   },
 
   register: function (email, password) {
-  $.blockUI({ message: '<h3>Registering...</h3>' });
+    $.blockUI({ message: '<h3>Registering...</h3>' });
 
-  const passwordRepeat = $("#register-password-repeat").val();
-
-  RestClient.post(
-    "/auth/register",
-    {
-      email: email,
-      password: password,
-      password_repeat: passwordRepeat
-    },
-    function () {
-      $.unblockUI();
-      alert("Registration successful. Please log in.");
-      window.location.hash = "#login";
-    },
-    function (xhr) {
-      $.unblockUI();
-      alert(xhr.responseText || "Registration failed");
-    }
-  );
-},
+    RestClient.post(
+      "/auth/register",
+      { email: email, password: password },
+      function () {
+        $.unblockUI();
+        alert("Registration successful. Please log in.");
+        window.location.hash = "#login";
+      },
+      function (xhr) {
+        $.unblockUI();
+        alert(xhr.responseText || "Registration failed");
+      }
+    );
+  },
 
   logout: function () {
     localStorage.removeItem(Constants.TOKEN_KEY);
