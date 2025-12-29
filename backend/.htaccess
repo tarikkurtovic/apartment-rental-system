@@ -1,8 +1,6 @@
 RewriteEngine On
 
-# Use environment-aware RewriteBase
-# For DigitalOcean (root deployment), use /
-# For local XAMPP, use /apartment-rental-system/backend/
+
 RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f

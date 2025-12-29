@@ -81,4 +81,4 @@ require_once __DIR__ . '/routes/RoomTypeRoutes.php';
 require_once __DIR__ . '/routes/UserRoutes.php';
 
 Flight::start();  
-?>
+?> 
