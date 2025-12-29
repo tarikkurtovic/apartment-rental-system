@@ -27,18 +27,6 @@ Flight::group('/auth', function() {
      *                     type="string",
      *                     example="demo@gmail.com",
      *                     description="User email"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="name",
-     *                     type="string",
-     *                     example="John Doe",
-     *                     description="User name (optional, defaults to email username)"
-     *                 ),
-     *                 @OA\Property(
-     *                     property="phone",
-     *                     type="string",
-     *                     example="+38761234567",
-     *                     description="User phone number (optional)"
      *                 )
      *             )
      *         )
@@ -56,25 +44,15 @@ Flight::group('/auth', function() {
     Flight::route("POST /register", function () {
         $data = json_decode(Flight::request()->getBody(), true);
 
-        // Check if JSON parsing failed
-        if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            Flight::json(['success' => false, 'error' => 'Invalid JSON data'], 400);
-            return;
-        }
-
         $response = Flight::auth_service()->register($data);
     
         if ($response['success']) {
             Flight::json([
-                'success' => true,
                 'message' => 'User registered successfully',
                 'data' => $response['data']
             ]);
         } else {
-            Flight::json([
-                'success' => false,
-                'error' => $response['error']
-            ], 500);
+            Flight::halt(500, $response['error']);
         }
     });
 
