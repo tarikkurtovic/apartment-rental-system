@@ -90,12 +90,12 @@
         localStorage.setItem(Constants.TOKEN_KEY, response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data));
         
-        // Update admin link visibility
+     
         if (Utils.isAdmin()) {
           $('#admin-link').show();
         }
         
-        // Clear any query params from URL and navigate to home
+       
         window.history.replaceState({}, document.title, window.location.pathname + '#home');
         window.location.hash = '#home';
       },
@@ -107,22 +107,28 @@
   },
 
   register: function (email, password) {
-    $.blockUI({ message: '<h3>Registering...</h3>' });
+  $.blockUI({ message: '<h3>Registering...</h3>' });
 
-    RestClient.post(
-      "/auth/register",
-      { email: email, password: password },
-      function () {
-        $.unblockUI();
-        alert("Registration successful. Please log in.");
-        window.location.hash = "#login";
-      },
-      function (xhr) {
-        $.unblockUI();
-        alert(xhr.responseText || "Registration failed");
-      }
-    );
-  },
+  const passwordRepeat = $("#register-password-repeat").val();
+
+  RestClient.post(
+    "/auth/register",
+    {
+      email: email,
+      password: password,
+      password_repeat: passwordRepeat
+    },
+    function () {
+      $.unblockUI();
+      alert("Registration successful. Please log in.");
+      window.location.hash = "#login";
+    },
+    function (xhr) {
+      $.unblockUI();
+      alert(xhr.responseText || "Registration failed");
+    }
+  );
+},
 
   logout: function () {
     localStorage.removeItem(Constants.TOKEN_KEY);
