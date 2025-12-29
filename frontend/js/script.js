@@ -116,6 +116,7 @@ function loadUsers() {
 }
 
 function showUserForm(title) {
+  $.unblockUI();
   $('#user-form-title').text(title);
   $('#user-form-section').show();
   $('html, body').animate({
@@ -235,6 +236,7 @@ function saveUser() {
 
 // ==================== ADMIN BUTTON HANDLERS ====================
 $(document).on("click", "#btn-create", function () {
+  $.unblockUI();
   hideUserForm();
   showUserForm('Create User');
 });
@@ -248,10 +250,11 @@ $(document).on("click", "#save-user-btn", function() {
 });
 
 $(document).on("click", "#cancel-user-btn", function() {
+  $.unblockUI();
   hideUserForm();
 });
 
-// Load users when admin panel is opened
+
 $(window).on('hashchange', function() {
   if (location.hash === '#admin-panel' && Utils.isAdmin()) {
     setTimeout(loadUsers, 200);
@@ -284,3 +287,8 @@ function initServicesForCurrentPage() {
     BookingService.init();
   }
 }
+
+
+$(document).ajaxStop(function () {
+  $.unblockUI();
+});
