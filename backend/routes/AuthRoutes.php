@@ -27,6 +27,18 @@ Flight::group('/auth', function() {
      *                     type="string",
      *                     example="demo@gmail.com",
      *                     description="User email"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string",
+     *                     example="John Doe",
+     *                     description="User name (optional, defaults to email username)"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone",
+     *                     type="string",
+     *                     example="+38761234567",
+     *                     description="User phone number (optional)"
      *                 )
      *             )
      *         )

@@ -19,32 +19,39 @@ class AuthService extends BaseService {
    }
 
    public function register($entity) {
+       try {
+           if (empty($entity['email']) || empty($entity['password'])) {
+               return ['success' => false, 'error' => 'Email and password are required.'];
+           }
 
-       if (empty($entity['email']) || empty($entity['password'])) {
-           return ['success' => false, 'error' => 'Email and password are required.'];
+           $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
+           if($email_exists){
+               return ['success' => false, 'error' => 'Email already registered.'];
+           }
+
+           // Hash the password
+           $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
+
+           // Set default role if not provided
+           if (!isset($entity['role'])) {
+               $entity['role'] = 'user';
+           }
+
+           // Set default name if not provided (use part before @ from email)
+           if (empty($entity['name'])) {
+               $entity['name'] = explode('@', $entity['email'])[0];
+           }
+
+           parent::create($entity);
+            
+           $user = $this->auth_dao->get_user_by_email($entity['email']);
+
+           unset($user['password']);
+
+           return ['success' => true, 'data' => $user];
+       } catch (Exception $e) {
+           return ['success' => false, 'error' => 'Registration failed: ' . $e->getMessage()];
        }
-
-    
-       $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
-       if($email_exists){
-           return ['success' => false, 'error' => 'Email already registered.'];
-       }
-
-   
-       $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
-
-    
-       if (!isset($entity['role'])) {
-           $entity['role'] = 'user';
-       }
-
-       parent::create($entity);
-        
-       $user = $this->auth_dao->get_user_by_email($entity['email']);
-
-       unset($user['password']);
-
-       return ['success' => true, 'data' => $user];
    }
 
    public function login($entity) {
