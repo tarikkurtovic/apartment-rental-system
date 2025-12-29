@@ -92,7 +92,7 @@
         
         alert("User logged in!");
      
-        // Show admin link in navbar for admin users
+       
         if (Utils.isAdmin()) {
           $('#admin-link').show();
         }

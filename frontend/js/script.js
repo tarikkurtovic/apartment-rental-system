@@ -194,7 +194,7 @@ function saveUser() {
   $.blockUI({ message: '<h3>Saving user...</h3>' });
   
   if (id) {
-    // Update existing user
+    
     RestClient.put(
       "/users/" + id,
       userData,
@@ -210,7 +210,6 @@ function saveUser() {
       }
     );
   } else {
-    // Create new user
     if (!password) {
       $.unblockUI();
       alert("Password is required for new users");
@@ -261,7 +260,7 @@ $(document).on("click", "#save-user-btn", function() {
   saveUser();
 });
 
-// Load users when admin panel is opened
+
 $(window).on('hashchange', function() {
   if (location.hash === '#admin-panel' && Utils.isAdmin()) {
     setTimeout(loadUsers, 200);
