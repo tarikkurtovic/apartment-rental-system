@@ -102,14 +102,12 @@ $(document).ready(function () {
   BookingService.init();
 });
 
-// Initialize services on hash change (since spapp doesn't fire custom events)
 $(window).on('hashchange', function() {
   setTimeout(function() {
     initServicesForCurrentPage();
-  }, 100); // Small delay to ensure page is loaded
+  }, 100); 
 });
 
-// Also run on initial load
 $(document).ready(function() {
   setTimeout(function() {
     initServicesForCurrentPage();

@@ -39,7 +39,7 @@ class AuthService extends BaseService {
         
            $role = isset($entity['role']) ? $entity['role'] : 'user';
 
-           // Only pass valid database columns to prevent insert errors
+          
            $user_data = [
                'name' => $entity['name'],
                'email' => $entity['email'],
@@ -47,7 +47,7 @@ class AuthService extends BaseService {
                'role' => $role
            ];
            
-           // Add phone if provided
+           
            if (!empty($entity['phone'])) {
                $user_data['phone'] = $entity['phone'];
            }
