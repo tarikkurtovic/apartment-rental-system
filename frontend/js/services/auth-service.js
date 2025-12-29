@@ -27,8 +27,7 @@
           minlength: "Password must be at least 6 characters"
         }
       },
-      submitHandler: function(form, event) {
-        event.preventDefault();
+      submitHandler: function(form) {
         const email = $("#login-email").val();
         const password = $("#login-password").val();
         
@@ -70,8 +69,7 @@
           equalTo: "Passwords do not match"
         }
       },
-      submitHandler: function(form, event) {
-        event.preventDefault();
+      submitHandler: function(form) {
         const email = $("#register-email").val();
         const password = $("#register-password").val();
         
