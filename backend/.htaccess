@@ -1,7 +1,7 @@
 RewriteEngine On
 
 
-RewriteBase /
+RewriteBase /apartment-rental-system/backend/
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

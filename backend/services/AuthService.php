@@ -29,6 +29,11 @@ class AuthService extends BaseService {
                return ['success' => false, 'error' => 'Email already registered.'];
            }
 
+           // Set default name if not provided (use part before @ from email)
+           if (empty($entity['name'])) {
+               $entity['name'] = explode('@', $entity['email'])[0];
+           }
+
            // Hash the password
            $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
 
@@ -37,18 +42,36 @@ class AuthService extends BaseService {
                $entity['role'] = 'user';
            }
 
-           // Set default name if not provided (use part before @ from email)
-           if (empty($entity['name'])) {
-               $entity['name'] = explode('@', $entity['email'])[0];
+           // Prepare data for insert - only include valid columns
+           $insert_data = [
+               'name' => $entity['name'],
+               'email' => $entity['email'],
+               'password' => $entity['password'],
+               'role' => $entity['role']
+           ];
+           
+           // Add phone if provided
+           if (!empty($entity['phone'])) {
+               $insert_data['phone'] = $entity['phone'];
            }
 
-           parent::create($entity);
+           $result = $this->auth_dao->insert($insert_data);
+           
+           if (!$result) {
+               return ['success' => false, 'error' => 'Failed to insert user into database.'];
+           }
             
            $user = $this->auth_dao->get_user_by_email($entity['email']);
+
+           if (!$user) {
+               return ['success' => false, 'error' => 'User was not created.'];
+           }
 
            unset($user['password']);
 
            return ['success' => true, 'data' => $user];
+       } catch (PDOException $e) {
+           return ['success' => false, 'error' => 'Database error: ' . $e->getMessage()];
        } catch (Exception $e) {
            return ['success' => false, 'error' => 'Registration failed: ' . $e->getMessage()];
        }
