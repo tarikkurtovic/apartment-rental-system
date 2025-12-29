@@ -1,7 +1,8 @@
 RewriteEngine On
 
-
-RewriteBase /apartment-rental-system/backend/
+# RewriteBase is / for production (DigitalOcean)
+# For local XAMPP in subdirectory, the base path is handled by Flight framework
+RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

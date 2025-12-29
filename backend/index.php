@@ -19,8 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-// Set Flight base path for subdirectory installation
-Flight::set('flight.base_url', '/apartment-rental-system/backend');
+// Set Flight base path - different for local vs production
+if ($_SERVER['SERVER_NAME'] == 'localhost' || $_SERVER['SERVER_NAME'] == '127.0.0.1') {
+    Flight::set('flight.base_url', '/apartment-rental-system/backend');
+} else {
+    Flight::set('flight.base_url', '');
+}
 
 require_once __DIR__ . '/services/PaymentService.php';
 require_once __DIR__ . '/services/ReservationService.php';
