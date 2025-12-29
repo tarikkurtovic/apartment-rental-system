@@ -19,36 +19,57 @@ class AuthService extends BaseService {
    }
 
    public function register($entity) {
-
-       if (empty($entity['email']) || empty($entity['password'])) {
-           return ['success' => false, 'error' => 'Email and password are required.'];
-       }
-    
-       $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
-       if($email_exists){
-           return ['success' => false, 'error' => 'Email already registered.'];
-       }
-
-       // Set default name if not provided (use part before @ from email)
-       if (empty($entity['name'])) {
-           $entity['name'] = explode('@', $entity['email'])[0];
-       }
-
-   
-       $entity['password'] = password_hash($entity['password'], PASSWORD_BCRYPT);
-
-    
-       if (!isset($entity['role'])) {
-           $entity['role'] = 'user';
-       }
-
-       parent::create($entity);
+       try {
+           if (empty($entity['email']) || empty($entity['password'])) {
+               return ['success' => false, 'error' => 'Email and password are required.'];
+           }
         
-       $user = $this->auth_dao->get_user_by_email($entity['email']);
+           $email_exists = $this->auth_dao->get_user_by_email($entity['email']);
+           if($email_exists){
+               return ['success' => false, 'error' => 'Email already registered.'];
+           }
 
-       unset($user['password']);
+           if (empty($entity['name'])) {
+               $entity['name'] = explode('@', $entity['email'])[0];
+           }
 
-       return ['success' => true, 'data' => $user];
+       
+           $hashed_password = password_hash($entity['password'], PASSWORD_BCRYPT);
+
+        
+           $role = isset($entity['role']) ? $entity['role'] : 'user';
+
+           // Only pass valid database columns to prevent insert errors
+           $user_data = [
+               'name' => $entity['name'],
+               'email' => $entity['email'],
+               'password' => $hashed_password,
+               'role' => $role
+           ];
+           
+           // Add phone if provided
+           if (!empty($entity['phone'])) {
+               $user_data['phone'] = $entity['phone'];
+           }
+
+           $result = $this->auth_dao->insert($user_data);
+           
+           if (!$result) {
+               return ['success' => false, 'error' => 'Failed to create user.'];
+           }
+            
+           $user = $this->auth_dao->get_user_by_email($entity['email']);
+
+           if (!$user) {
+               return ['success' => false, 'error' => 'User created but could not be retrieved.'];
+           }
+
+           unset($user['password']);
+
+           return ['success' => true, 'data' => $user];
+       } catch (Exception $e) {
+           return ['success' => false, 'error' => 'Registration error: ' . $e->getMessage()];
+       }
    }
 
    public function login($entity) {

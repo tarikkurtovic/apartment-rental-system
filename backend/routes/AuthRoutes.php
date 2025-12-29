@@ -44,15 +44,24 @@ Flight::group('/auth', function() {
     Flight::route("POST /register", function () {
         $data = json_decode(Flight::request()->getBody(), true);
 
+        if ($data === null) {
+            Flight::json(['success' => false, 'error' => 'Invalid JSON data'], 400);
+            return;
+        }
+
         $response = Flight::auth_service()->register($data);
     
         if ($response['success']) {
             Flight::json([
+                'success' => true,
                 'message' => 'User registered successfully',
                 'data' => $response['data']
             ]);
         } else {
-            Flight::halt(500, $response['error']);
+            Flight::json([
+                'success' => false,
+                'error' => $response['error']
+            ], 500);
         }
     });
 
