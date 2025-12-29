@@ -90,6 +90,7 @@
         localStorage.setItem(Constants.TOKEN_KEY, response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data));
         
+        alert("User logged in!");
      
         if (Utils.isAdmin()) {
           $('#admin-link').show();
@@ -101,7 +102,7 @@
       },
       function () {
         $.unblockUI();
-        alert("Login failed");
+        alert("Please register");
       }
     );
   },
