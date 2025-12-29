@@ -84,23 +84,6 @@ $(window).on('load hashchange', function () {
 // ==================== ADMIN PANEL TAB SWITCHING ====================
 var currentAdminTab = 'users';
 
-$(document).on('click', '#adminTabs .nav-link', function(e) {
-  e.preventDefault();
-  $('#adminTabs .nav-link').removeClass('active');
-  $(this).addClass('active');
-  currentAdminTab = $(this).data('tab');
-  
-  if (currentAdminTab === 'users') {
-    $('#users-section').show();
-    $('#payments-section').hide();
-    loadUsers();
-  } else {
-    $('#users-section').hide();
-    $('#payments-section').show();
-    loadPayments();
-  }
-});
-
 // ==================== USERS CRUD ====================
 function loadUsers() {
   $.blockUI({ message: '<h3>Loading users...</h3>' });
@@ -132,6 +115,24 @@ function loadUsers() {
   );
 }
 
+function showUserForm(title) {
+  $('#user-form-title').text(title);
+  $('#user-form-section').show();
+  $('html, body').animate({
+    scrollTop: $('#user-form-section').offset().top
+  }, 300);
+}
+
+function hideUserForm() {
+  $('#user-form-section').hide();
+  $('#user-id').val('');
+  $('#user-name').val('');
+  $('#user-email').val('');
+  $('#user-password').val('');
+  $('#user-phone').val('');
+  $('#user-role').val('user');
+}
+
 function editUser(id) {
   $.blockUI({ message: '<h3>Loading user...</h3>' });
   
@@ -139,14 +140,13 @@ function editUser(id) {
     "/users/" + id,
     function(user) {
       $.unblockUI();
-      $('#userModalTitle').text('Edit User');
       $('#user-id').val(user.id);
       $('#user-name').val(user.name);
       $('#user-email').val(user.email);
       $('#user-password').val('');
       $('#user-phone').val(user.phone || '');
       $('#user-role').val(user.role);
-      $('#userModal').modal('show');
+      showUserForm('Edit User');
     },
     function(xhr) {
       $.unblockUI();
@@ -194,13 +194,13 @@ function saveUser() {
   $.blockUI({ message: '<h3>Saving user...</h3>' });
   
   if (id) {
-    
+    // Update existing user
     RestClient.put(
       "/users/" + id,
       userData,
       function() {
         $.unblockUI();
-        $('#userModal').modal('hide');
+        hideUserForm();
         alert("User updated successfully");
         loadUsers();
       },
@@ -210,6 +210,7 @@ function saveUser() {
       }
     );
   } else {
+    // Create new user
     if (!password) {
       $.unblockUI();
       alert("Password is required for new users");
@@ -220,7 +221,7 @@ function saveUser() {
       userData,
       function() {
         $.unblockUI();
-        $('#userModal').modal('hide');
+        hideUserForm();
         alert("User created successfully");
         loadUsers();
       },
@@ -234,33 +235,23 @@ function saveUser() {
 
 // ==================== ADMIN BUTTON HANDLERS ====================
 $(document).on("click", "#btn-create", function () {
-  if (currentAdminTab === 'users') {
-    $('#userModalTitle').text('Create User');
-    $('#user-id').val('');
-    $('#user-name').val('');
-    $('#user-email').val('');
-    $('#user-password').val('');
-    $('#user-phone').val('');
-    $('#user-role').val('user');
-    $('#userModal').modal('show');
-  } else {
-    alert("Create payment - not implemented");
-  }
+  hideUserForm();
+  showUserForm('Create User');
 });
 
 $(document).on("click", "#btn-read", function () {
-  if (currentAdminTab === 'users') {
-    loadUsers();
-  } else {
-    loadPayments();
-  }
+  loadUsers();
 });
 
 $(document).on("click", "#save-user-btn", function() {
   saveUser();
 });
 
+$(document).on("click", "#cancel-user-btn", function() {
+  hideUserForm();
+});
 
+// Load users when admin panel is opened
 $(window).on('hashchange', function() {
   if (location.hash === '#admin-panel' && Utils.isAdmin()) {
     setTimeout(loadUsers, 200);
